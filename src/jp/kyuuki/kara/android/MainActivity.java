@@ -30,7 +30,6 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    // �^�b�`�C�x���g�n���h��
     private float old_x;
     
     private void setViewFlipper(ViewFlipper vf) {
