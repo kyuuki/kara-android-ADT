@@ -1,16 +1,14 @@
 package jp.kyuuki.kara.android;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ViewFlipper;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
     private ViewFlipper vf;
     
     @Override
@@ -20,14 +18,6 @@ public class MainActivity extends Activity {
         
         vf = (ViewFlipper) findViewById(R.id.viewFlipper1);
         setViewFlipper(vf);
-        
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     private float old_x;
@@ -58,6 +48,7 @@ public class MainActivity extends Activity {
                     break;
                 }
 
+                // イベントを消化
                 return true;
             }
         });

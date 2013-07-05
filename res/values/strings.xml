@@ -2,7 +2,11 @@
 <resources>
 
     <string name="app_name">KARA</string>
+    <string name="action_facebook">Facebook</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="action_about">About</string>
+    
+    <!-- for Facebook SDK -->
+    <string name="app_id">271954906278803</string>
 
 </resources>
