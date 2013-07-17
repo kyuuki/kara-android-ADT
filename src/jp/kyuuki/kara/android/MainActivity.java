@@ -1,56 +1,22 @@
 package jp.kyuuki.kara.android;
 
+import jp.kyuuki.kara.android.fragment.MemberFragmentStatePagerAdapter;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.animation.AnimationUtils;
-import android.widget.ViewFlipper;
+import android.support.v4.view.ViewPager;
 
 public class MainActivity extends BaseActivity {
-    private ViewFlipper vf;
+    /*
+     * 画面要素
+     */
+    private ViewPager mViewPager;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        vf = (ViewFlipper) findViewById(R.id.viewFlipper1);
-        setViewFlipper(vf);
-    }
-
-    private float old_x;
-    
-    private void setViewFlipper(ViewFlipper vf) {
-        vf.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                Log.v("kara", "event = " + event);
-                ViewFlipper vfvf = (ViewFlipper) view;
-
-                switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    old_x = event.getX();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    float new_x = event.getX();
-                    if (old_x < new_x) {
-                        vfvf.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_in_left));
-                        vfvf.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.slide_out_right));
-                        vfvf.showNext();
-                    } else if (old_x > new_x) {
-                        // android.jar に入っているアニメーションは、コピーして持ってくるのが正しいやり方？
-                        vfvf.setInAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_in_right));
-                        vfvf.setOutAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_out_left));
-                        vfvf.showPrevious();
-                    }
-                    break;
-                }
-
-                // イベントを消化
-                return true;
-            }
-        });
+        // 画面要素 (レイアウト) と変数を結びつける
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(new MemberFragmentStatePagerAdapter(getSupportFragmentManager()));
     }
 }

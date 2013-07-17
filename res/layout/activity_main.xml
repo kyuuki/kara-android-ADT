@@ -1,47 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <ViewFlipper
-        android:id="@+id/viewFlipper1"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:inAnimation="@android:anim/slide_in_left"
-        android:outAnimation="@android:anim/slide_out_right" >
+        android:layout_height="match_parent" >
 
-        <include
+        <android.support.v4.view.PagerTitleStrip
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/layout_gyuri" />
-
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/layout_seungyeon" />
-        
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/layout_nicole" />
-        
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/layout_hara" />
-        
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/layout_jiyoung" />
-        
-    </ViewFlipper>
-
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="#CCCCCC"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:textColor="#000000" />
+    </android.support.v4.view.ViewPager>
 </RelativeLayout>

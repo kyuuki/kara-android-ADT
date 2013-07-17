@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/kara3" />
+        android:scaleType="centerInside"
+        android:src="@drawable/kara1" />
 
 </RelativeLayout>
