@@ -95,7 +95,7 @@ public abstract class BaseActivity extends FragmentActivity {
             PackageInfo packageInfo;
             try {
                 packageInfo = pm.getPackageInfo(this.getPackageName(), PackageManager.GET_ACTIVITIES);
-                versionName = "Version " + packageInfo.versionName;
+                versionName = getString(R.string.version) + " " + packageInfo.versionName;
             } catch (NameNotFoundException e) {
                 e.printStackTrace();
                 versionName = "";
@@ -154,9 +154,17 @@ public abstract class BaseActivity extends FragmentActivity {
         Log.v(TAG, "  facebookState = " + facebookState);
 
         // キャンセルしたときは投稿ルーチンをやめる
-        if (exception instanceof FacebookOperationCanceledException) {
-            facebookState = FacebookState.NOTHING;
-            return;
+        if (exception != null) {
+            if (exception instanceof FacebookOperationCanceledException) {
+                session.closeAndClearTokenInformation();
+                facebookState = FacebookState.NOTHING;
+                return;
+            } else {
+                Toast.makeText(BaseActivity.this, getString(R.string.message_facebook_login_error), Toast.LENGTH_LONG).show();
+                session.closeAndClearTokenInformation();
+                facebookState = FacebookState.NOTHING;
+                return;
+            }
         }
 
         switch (facebookState) {
@@ -216,7 +224,7 @@ public abstract class BaseActivity extends FragmentActivity {
         if (hasPublishPermission(session) == false) {
             if (facebookState != FacebookState.REQUESTING_NEW_PUBLISH_PERMISSIONS) {
                 Session.getActiveSession().requestNewPublishPermissions(
-                        new Session.NewPermissionsRequest(this, PERMISSIONS));
+                    new Session.NewPermissionsRequest(this, PERMISSIONS));
                 facebookState = FacebookState.REQUESTING_NEW_PUBLISH_PERMISSIONS;
             }
             return false;
@@ -234,15 +242,18 @@ public abstract class BaseActivity extends FragmentActivity {
                 Log.v(TAG, "newGraphPathRequest.onCompleted()");
                 Log.v(TAG, response.toString());
                 
-                Toast.makeText(BaseActivity.this, "Posted", Toast.LENGTH_SHORT).show();
+                if (response.getError() != null) {
+                    Toast.makeText(BaseActivity.this, getString(R.string.message_post_facebook_error), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(BaseActivity.this, getString(R.string.message_post_facebook), Toast.LENGTH_LONG).show();
+                }
             }
         });
         Bundle parameters = new Bundle();
-        parameters.putString("message", "Check out KARA. #KARA");
+        parameters.putString("message", "このアプリを使っています！ #KARA");
         parameters.putString("picture", "http://cdn-jp.umgi.net/products/um/umck-9632_01_m.jpg");
-        parameters.putString("link", "http://www.karaweb.jp/");
-        parameters.putString("caption", "***** KARA *****");
-        parameters.putString("description", "This is the KARA Official Web site in Japan.");
+        parameters.putString("link", "https://play.google.com/store/apps/details?id=jp.kyuuki.kara.android");
+        parameters.putString("description", "僕の選りすぐり KARA 画像あぷり");
         request.setParameters(parameters);
         request.setHttpMethod(HttpMethod.POST);
         Request.executeBatchAsync(request);
